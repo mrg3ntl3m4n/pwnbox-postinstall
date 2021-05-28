@@ -15,10 +15,12 @@ echo -e "\nInstalling APT packages ..."
 apt_packages=(
     apt-transport-https
     awscli
+    exploitdb
     ffuf
     flameshot
     fonts-ubuntu
     libssl-dev
+    ltrace
     ncat
     neo4j
     plank
@@ -29,6 +31,7 @@ apt_packages=(
     rdesktop
     snmp
     snmp-mibs-downloader
+    strace
     virtualbox-guest-x11
 )
 
