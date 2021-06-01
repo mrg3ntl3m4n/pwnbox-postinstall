@@ -126,33 +126,10 @@ sudo cp -R htb/ /usr/share/icons/
 sudo mkdir /usr/share/themes/HackTheBox
 sudo cp index.theme /usr/share/themes/HackTheBox/
 
-echo -e "\nThings to do manually to have the look and feel of pwnbox:"
-
-echo -e "- Change the theme\n"
-
-echo "- Font Settings:"
-echo -e "-- Application font: Lato Regular 11
--- Document font: Lato Regular 11
--- Desktop font: Lato Regular 11
--- Fixed width font: Ubuntu Mono Regular 12\n"
-
-echo "- Terminal Colors:"
-echo -e "-- Text Color: #A4B1CD
--- Bold Color: #C5D1EB
--- Background Color: #141D2B\n"
-
-echo "- Customize the Panel:"
-echo -e "-- Add VPN message (/opt/vpnpanel.sh)
--- Add/Edit icons\n"
-
-echo "- System monitor:"
-echo -e "-- Width: 135px
--- Update interval: 100ms\n"
-
-echo -e "- Add bottom dock (plank)\n"
+cat todo.txt
 
 kill $pid_sudo_loop
 wait $pid_sudo_loop 2>/dev/null
 
 duration=$SECONDS
-echo "The setup took $(($duration / 3600)) hours, $((($duration / 60) % 60)) minutes and $(($duration % 60)) seconds to complete."
+echo -e "\nThe setup took $(($duration / 3600)) hours, $((($duration / 60) % 60)) minutes and $(($duration % 60)) seconds to complete."

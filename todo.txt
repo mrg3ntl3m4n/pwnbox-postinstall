@@ -1,0 +1,30 @@
+Things to do manually to have the look and feel of pwnbox:
+
+- Change the theme:
+-- System > Preferences > Look and Feel > Appearance > Select HackTheBox > Apply Background
+
+- Font Settings:
+-- Application font: Lato Regular 11
+-- Document font: Lato Regular 11
+-- Desktop font: Lato Regular 11
+-- Fixed width font: Ubuntu Mono Regular 12
+
+- Terminal Colors:
+-- Text Color: #A4B1CD
+-- Bold Color: #C5D1EB
+-- Background Color: #141D2B
+
+- Customize the Panel:
+-- Add VPN message (/opt/vpnpanel.sh)
+-- Add/Edit icons
+
+- System monitor:
+-- Width: 135px
+-- Update interval: 100ms
+
+- Add bottom dock (plank):
+-- System -> Preferences -> Personal -> Startup Applications > Add
+-- Name: Plank
+-- Command: plank
+
+Reboot your machine!
