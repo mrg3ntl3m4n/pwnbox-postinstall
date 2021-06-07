@@ -34,7 +34,6 @@ apt_packages=(
     snmp
     snmp-mibs-downloader
     strace
-    virtualbox-guest-x11
 )
 
 sudo apt-get install -y ${apt_packages[@]}
