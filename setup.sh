@@ -2,6 +2,8 @@
 # Calculate setup estimated elapsed time
 SECONDS=0
 
+setup_folder=$(pwd)
+
 # Prevent sudo timeout
 echo "Caching user's password ..."
 sudo -v
@@ -109,7 +111,7 @@ sudo chmod +x Obsidian-*.AppImage
 ln -s /opt/Obsidian/Obsidian-*.AppImage $HOME/.local/bin/obsidian
 
 echo -e "\nCopying files around ..."
-cd $HOME/pwnbox-postinstall
+cd $setup_folder/
 
 cp $HOME/.bashrc $HOME/.bashrc.bak
 cp .bashrc $HOME/.bashrc
