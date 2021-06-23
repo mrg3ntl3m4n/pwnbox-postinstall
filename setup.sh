@@ -23,10 +23,12 @@ apt_packages=(
     flameshot
     fonts-ubuntu
     gnupg
+    jq
     libssl-dev
     ltrace
     ncat
     neo4j
+    nfs-common
     plank
     powershell-empire
     python-dev
