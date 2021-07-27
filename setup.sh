@@ -46,6 +46,7 @@ sudo apt-get install -y ${apt_packages[@]}
 echo -e "\nCloning GitHub repositories ..."
 git_repos=(
     https://github.com/stealthcopter/deepce.git
+    https://github.com/andresriancho/enumerate-iam.git
     https://github.com/internetwache/GitTools.git
     https://github.com/mzet-/linux-exploit-suggester.git
     https://github.com/samratashok/nishang.git
@@ -92,6 +93,11 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
 echo -e "\nInstalling droopescan ..."
 python3 -m pip install droopescan
+
+echo -e "\nInstalling enumerate-iam ..."
+cd enumerate-iam/
+pip install -r requirements.txt
+cd ..
 
 echo -e "\nInstalling Ghidra ..."
 sudo mkdir Ghidra && cd Ghidra/
