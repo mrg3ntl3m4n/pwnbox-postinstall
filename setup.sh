@@ -112,6 +112,9 @@ sudo wget -q --show-progress https://github.com/obsidianmd/obsidian-releases/rel
 sudo chmod +x Obsidian-*.AppImage
 ln -s /opt/Obsidian/Obsidian-*.AppImage $HOME/.local/bin/obsidian
 
+echo -e "\nInstalling pacu ..."
+pip3 install -U pacu
+
 echo -e "\nCopying files around ..."
 cd $setup_folder/
 
