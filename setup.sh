@@ -99,6 +99,9 @@ cd enumerate-iam/
 pip install -r requirements.txt
 cd ..
 
+echo -e "\nInstalling flask-unsign"
+pip3 install flask-unsign
+
 echo -e "\nInstalling Ghidra ..."
 sudo mkdir Ghidra && cd Ghidra/
 sudo wget -q --show-progress https://ghidra-sre.org/ghidra_9.2.3_PUBLIC_20210325.zip
