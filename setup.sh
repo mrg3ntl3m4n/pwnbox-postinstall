@@ -45,12 +45,15 @@ sudo apt-get install -y ${apt_packages[@]}
 # Tools that can be "installed" only cloning repositories
 echo -e "\nCloning GitHub repositories ..."
 git_repos=(
+    https://github.com/dirkjanm/adidnsdump
     https://github.com/stealthcopter/deepce.git
     https://github.com/andresriancho/enumerate-iam.git
     https://github.com/internetwache/GitTools.git
+    https://github.com/dirkjanm/krbrelayx.git
     https://github.com/mzet-/linux-exploit-suggester.git
     https://github.com/samratashok/nishang.git
     https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite.git
+    https://github.com/the-useless-one/pywerview.git
     https://github.com/danielmiessler/SecLists.git
     https://github.com/tennc/webshell.git
 )
@@ -62,7 +65,12 @@ for repo in ${git_repos[@]}; do
     echo ""
 done
 
-echo "Installing BloodHound ..."
+echo "Installing adidnsdump"
+cd adidnsdump
+pip install .
+cd ..
+
+echo -e "\nInstalling BloodHound ..."
 sudo mkdir BloodHound && cd BloodHound/
 sudo wget -q --show-progress https://github.com/BloodHoundAD/BloodHound/releases/download/4.0.2/BloodHound-linux-x64.zip
 echo -e "\nUnzipping BloodHound ..."
