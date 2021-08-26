@@ -65,7 +65,7 @@ for repo in ${git_repos[@]}; do
     echo ""
 done
 
-echo "Installing adidnsdump"
+echo "Installing adidnsdump ..."
 cd adidnsdump
 pip install .
 cd ..
@@ -107,7 +107,7 @@ cd enumerate-iam/
 pip install -r requirements.txt
 cd ..
 
-echo -e "\nInstalling flask-unsign"
+echo -e "\nInstalling flask-unsign ..."
 pip3 install flask-unsign
 
 echo -e "\nInstalling Ghidra ..."
@@ -117,6 +117,9 @@ echo -e "\nUnzipping Ghidra ..."
 sudo unzip -q ghidra_*_PUBLIC_*.zip
 sudo rm ghidra_*_PUBLIC_*.zip
 cd ..
+
+echo -e "\nInstalling haiti-hash ..."
+sudo gem install haiti-hash
 
 echo -e "\nInstalling kerbrute ..."
 sudo mkdir kerbrute && cd kerbrute/
