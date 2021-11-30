@@ -7,7 +7,7 @@ setup_folder=$(pwd)
 # Prevent sudo timeout
 echo "Caching user's password ..."
 sudo -v
-while true; do sudo -v; sleep 300; done &
+while true; do sudo -v; sleep 60; done &
 pid_sudo_loop=$!
 
 echo -e "\nUpdating the system ..."
@@ -46,15 +46,21 @@ sudo apt-get install -y ${apt_packages[@]}
 echo -e "\nCloning GitHub repositories ..."
 git_repos=(
     https://github.com/dirkjanm/adidnsdump
+    https://github.com/adrecon/ADRecon.git
     https://github.com/stealthcopter/deepce.git
     https://github.com/andresriancho/enumerate-iam.git
     https://github.com/internetwache/GitTools.git
+    https://github.com/micahvandeusen/gMSADumper.git
+    https://github.com/ticarpi/jwt_tool.git
     https://github.com/dirkjanm/krbrelayx.git
-    https://github.com/mzet-/linux-exploit-suggester.git
+    https://github.com/jondonas/linux-exploit-suggester-2.git
+    https://github.com/diego-treitos/linux-smart-enumeration.git
     https://github.com/samratashok/nishang.git
-    https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite.git
+    https://github.com/carlospolop/PEASS-ng.git
+    https://github.com/PowerShellMafia/PowerSploit.git
     https://github.com/the-useless-one/pywerview.git
     https://github.com/danielmiessler/SecLists.git
+    https://github.com/byt3bl33d3r/SprayingToolkit.git
     https://github.com/tennc/webshell.git
 )
 
@@ -72,7 +78,7 @@ cd ..
 
 echo -e "\nInstalling BloodHound ..."
 sudo mkdir BloodHound && cd BloodHound/
-sudo wget -q --show-progress https://github.com/BloodHoundAD/BloodHound/releases/download/4.0.2/BloodHound-linux-x64.zip
+sudo wget -q --show-progress https://github.com/BloodHoundAD/BloodHound/releases/download/4.0.3/BloodHound-linux-x64.zip
 echo -e "\nUnzipping BloodHound ..."
 sudo unzip -q BloodHound-linux-x64.zip
 sudo rm BloodHound-linux-x64.zip
@@ -94,8 +100,8 @@ echo -e "\nInstalling Docker ..."
 sudo apt-get remove -y docker docker-engine docker.io containerd runc
 curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 echo \
-  "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
-  buster stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
@@ -112,7 +118,7 @@ pip3 install flask-unsign
 
 echo -e "\nInstalling Ghidra ..."
 sudo mkdir Ghidra && cd Ghidra/
-sudo wget -q --show-progress https://ghidra-sre.org/ghidra_9.2.3_PUBLIC_20210325.zip
+sudo wget -q --show-progress https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_10.0.4_build/ghidra_10.0.4_PUBLIC_20210928.zip
 echo -e "\nUnzipping Ghidra ..."
 sudo unzip -q ghidra_*_PUBLIC_*.zip
 sudo rm ghidra_*_PUBLIC_*.zip
@@ -121,6 +127,9 @@ cd ..
 echo -e "\nInstalling haiti-hash ..."
 sudo gem install haiti-hash
 
+echo -e "\nInstalling jwt_tool requirements ..."
+python3 -m pip install termcolor cprint pycryptodomex requests
+
 echo -e "\nInstalling kerbrute ..."
 sudo mkdir kerbrute && cd kerbrute/
 sudo wget -q --show-progress https://github.com/ropnop/kerbrute/releases/download/v1.0.3/kerbrute_linux_amd64
@@ -128,12 +137,21 @@ cd ..
 
 echo -e "\nInstalling Obsidian ..."
 sudo mkdir Obsidian && cd Obsidian/
-sudo wget -q --show-progress https://github.com/obsidianmd/obsidian-releases/releases/download/v0.12.3/Obsidian-0.12.3.AppImage
+sudo wget -q --show-progress https://github.com/obsidianmd/obsidian-releases/releases/download/v0.12.19/Obsidian-0.12.19.AppImage
 sudo chmod +x Obsidian-*.AppImage
 ln -s /opt/Obsidian/Obsidian-*.AppImage $HOME/.local/bin/obsidian
+cd ..
 
 echo -e "\nInstalling pacu ..."
 pip3 install -U pacu
+
+echo -e "\nInstalling SprayingToolkit ..."
+cd SprayingToolkit/
+sudo -H pip3 install -r requirements.txt
+
+echo -e "\nAdding date and time to bash history ..."
+echo 'export HISTTIMEFORMAT="%d/%m/%y %T "' >> ~/.bash_profile
+source ~/.bash_profile
 
 echo -e "\nCopying files around ..."
 cd $setup_folder/
