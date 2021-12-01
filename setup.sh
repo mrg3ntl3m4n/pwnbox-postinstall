@@ -18,7 +18,9 @@ apt_packages=(
     apt-transport-https
     awscli
     ca-certificates
+    dotnet-sdk-3.1
     exploitdb
+    feroxbuster
     ffuf
     flameshot
     fonts-ubuntu
@@ -45,10 +47,11 @@ sudo apt-get install -y ${apt_packages[@]}
 # Tools that can be "installed" only cloning repositories
 echo -e "\nCloning GitHub repositories ..."
 git_repos=(
-    https://github.com/dirkjanm/adidnsdump
+    https://github.com/dirkjanm/adidnsdump.git
     https://github.com/adrecon/ADRecon.git
     https://github.com/stealthcopter/deepce.git
     https://github.com/andresriancho/enumerate-iam.git
+    https://github.com/unode/firefox_decrypt.git
     https://github.com/internetwache/GitTools.git
     https://github.com/micahvandeusen/gMSADumper.git
     https://github.com/ticarpi/jwt_tool.git
@@ -61,7 +64,9 @@ git_repos=(
     https://github.com/the-useless-one/pywerview.git
     https://github.com/danielmiessler/SecLists.git
     https://github.com/byt3bl33d3r/SprayingToolkit.git
+    https://github.com/swisskyrepo/SSRFmap.git
     https://github.com/tennc/webshell.git
+    https://github.com/bitsadmin/wesng.git
 )
 
 cd /opt
@@ -89,6 +94,12 @@ sudo mkdir chisel && cd chisel/
 sudo wget -q --show-progress https://github.com/jpillora/chisel/releases/download/v1.7.6/chisel_1.7.6_linux_amd64.gz
 sudo wget -q --show-progress https://github.com/jpillora/chisel/releases/download/v1.7.6/chisel_1.7.6_windows_amd64.gz
 sudo gunzip chisel_*.gz
+cd ..
+
+echo -e "\nInstalling Covenant ..."
+git clone --recurse-submodules https://github.com/cobbr/Covenant
+cd Covenant/Covenant/
+dotnet run
 cd ..
 
 echo -e "\nInstalling CrackMapExec ..."
@@ -145,9 +156,18 @@ cd ..
 echo -e "\nInstalling pacu ..."
 pip3 install -U pacu
 
+echo -e "\nInstalling Search-That-Hash ..."
+pip3 install search-that-hash
+
 echo -e "\nInstalling SprayingToolkit ..."
 cd SprayingToolkit/
 sudo -H pip3 install -r requirements.txt
+cd ..
+
+echo -e "\nInstalling SSRFmap ..."
+cd SSRFmap/
+pip3 install -r requirements.txt
+cd ..
 
 echo -e "\nAdding date and time to bash history ..."
 echo 'export HISTTIMEFORMAT="%d/%m/%y %T "' >> ~/.bash_profile
