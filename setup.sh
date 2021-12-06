@@ -31,6 +31,7 @@ apt_packages=(
     ncat
     neo4j
     nfs-common
+    open-vm-tools-desktop
     plank
     powershell-empire
     python-dev
