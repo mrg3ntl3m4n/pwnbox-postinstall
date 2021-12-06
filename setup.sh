@@ -184,6 +184,7 @@ sudo cp vpn*.sh /opt/
 sudo chmod +x /opt/vpn*.sh
 
 sudo cp htb-bg*.jpg /usr/share/backgrounds/
+sudo cp hackingnight.png /usr/share/backgrounds/
 sudo cp -R Material-Black-Lime-Numix-FLAT/ /usr/share/icons/
 sudo cp -R htb/ /usr/share/icons/
 
