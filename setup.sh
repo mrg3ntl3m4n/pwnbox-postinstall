@@ -27,6 +27,8 @@ apt_packages=(
     gnupg
     jq
     libssl-dev
+    libxml2-dev
+    libxslt1-dev
     ltrace
     ncat
     neo4j
@@ -66,7 +68,7 @@ git_repos=(
     https://github.com/the-useless-one/pywerview.git
     https://github.com/danielmiessler/SecLists.git
     https://github.com/byt3bl33d3r/SprayingToolkit.git
-    https://github.com/swisskyrepo/SSRFmap.git
+    #https://github.com/swisskyrepo/SSRFmap.git
     https://github.com/tennc/webshell.git
     https://github.com/bitsadmin/wesng.git
 )
@@ -101,7 +103,7 @@ cd ..
 echo -e "\nInstalling Covenant ..."
 sudo git clone --recurse-submodules https://github.com/cobbr/Covenant
 cd Covenant/Covenant/
-dotnet run
+sudo dotnet run
 cd ../../
 
 echo -e "\nInstalling CrackMapExec ..."
@@ -139,7 +141,7 @@ cd ..
 
 echo -e "\nInstalling pip2 for Gopherus ..."
 curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output ~/Downloads/get-pip.py
-sudo python2 get-pip.py
+sudo python2 ~/Downloads/get-pip.py
 echo -e "\nInstalling Gopherus ..."
 cd Gopherus/
 sudo ./install.sh
@@ -174,10 +176,11 @@ cd SprayingToolkit/
 sudo -H pip3 install -r requirements.txt
 cd ..
 
-echo -e "\nInstalling SSRFmap ..."
-cd SSRFmap/
-pip3 install -r requirements.txt
-cd ..
+# Conflicting with other tools
+#echo -e "\nInstalling SSRFmap ..."
+#cd SSRFmap/
+#pip3 install -r requirements.txt
+#cd ..
 
 echo -e "\nAdding date and time to bash history ..."
 echo 'export HISTTIMEFORMAT="%d/%m/%y %T "' >> ~/.bash_profile
