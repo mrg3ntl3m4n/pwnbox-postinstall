@@ -55,6 +55,7 @@ git_repos=(
     https://github.com/unode/firefox_decrypt.git
     https://github.com/internetwache/GitTools.git
     https://github.com/micahvandeusen/gMSADumper.git
+    https://github.com/tarunkant/Gopherus.git
     https://github.com/ticarpi/jwt_tool.git
     https://github.com/dirkjanm/krbrelayx.git
     https://github.com/jondonas/linux-exploit-suggester-2.git
@@ -134,6 +135,14 @@ sudo wget -q --show-progress https://github.com/NationalSecurityAgency/ghidra/re
 echo -e "\nUnzipping Ghidra ..."
 sudo unzip -q ghidra_*_PUBLIC_*.zip
 sudo rm ghidra_*_PUBLIC_*.zip
+cd ..
+
+echo -e "\nInstalling pip2 for Gopherus ..."
+curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output ~/Downloads/get-pip.py
+sudo python2 get-pip.py
+echo -e "\nInstalling Gopherus ..."
+cd Gopherus/
+sudo ./install.sh
 cd ..
 
 echo -e "\nInstalling haiti-hash ..."
