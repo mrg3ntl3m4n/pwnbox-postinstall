@@ -98,10 +98,10 @@ sudo gunzip chisel_*.gz
 cd ..
 
 echo -e "\nInstalling Covenant ..."
-git clone --recurse-submodules https://github.com/cobbr/Covenant
+sudo git clone --recurse-submodules https://github.com/cobbr/Covenant
 cd Covenant/Covenant/
 dotnet run
-cd ..
+cd ../../
 
 echo -e "\nInstalling CrackMapExec ..."
 python3 -m pip install pipx
