@@ -104,6 +104,7 @@ cd ..
 echo -e "\nInstalling Covenant ..."
 sudo git clone --recurse-submodules https://github.com/cobbr/Covenant
 cd Covenant/Covenant/
+echo "\n==========> After you see \"Creating cert...\", wait a few seconds and then press Ctrl+C to continue the installation <==========\n"
 sudo dotnet run
 cd ../../
 
@@ -173,8 +174,8 @@ echo -e "\nInstalling pacu ..."
 pip3 install -U pacu
 
 echo -e "\nInstalling Postman ..."
-sudo wget -q --show-progress https://dl.pstmn.io/download/latest/linux64
-sudo tar zxvf Postman-linux-x86_64-*.tar.gz
+sudo wget -q --show-progress https://dl.pstmn.io/download/latest/linux64 -O Postman-linux-x86_64.tar.gz
+sudo tar zxvf Postman-linux-x86_64.tar.gz
 cp $setup_folder/Postman.desktop ~/.local/share/applications/Postman.desktop
 
 echo -e "\nInstalling Search-That-Hash ..."
