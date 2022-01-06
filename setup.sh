@@ -2,6 +2,7 @@
 # Calculate setup estimated elapsed time
 SECONDS=0
 
+# cd into pwnbox-postinstall folder
 setup_folder=$(pwd)
 
 # Prevent sudo timeout
@@ -150,6 +151,9 @@ cd ..
 echo -e "\nInstalling haiti-hash ..."
 sudo gem install haiti-hash
 
+echo -e "\nInstalling httprobe ..."
+go get -u github.com/tomnomnom/httprobe
+
 echo -e "\nInstalling jwt_tool requirements ..."
 python3 -m pip install termcolor cprint pycryptodomex requests
 
@@ -168,6 +172,11 @@ cd ..
 echo -e "\nInstalling pacu ..."
 pip3 install -U pacu
 
+echo -e "\nInstalling Postman ..."
+sudo wget -q --show-progress https://dl.pstmn.io/download/latest/linux64
+sudo tar zxvf Postman-linux-x86_64-*.tar.gz
+cp $setup_folder/Postman.desktop ~/.local/share/applications/Postman.desktop
+
 echo -e "\nInstalling Search-That-Hash ..."
 pip3 install search-that-hash
 
@@ -181,6 +190,17 @@ cd ..
 #cd SSRFmap/
 #pip3 install -r requirements.txt
 #cd ..
+
+echo -e "\nInstalling subfinder ..."
+go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+
+echo -e "\nInstalling waybackurls ..."
+go get github.com/tomnomnom/waybackurls
+
+echo -e "\nInstalling ysoserial ..."
+sudo mkdir ysoserial && cd ysoserial/
+sudo wget -q --show-progress https://jitpack.io/com/github/frohoff/ysoserial/master-SNAPSHOT/ysoserial-master-SNAPSHOT.jar
+cd ..
 
 echo -e "\nAdding date and time to bash history ..."
 echo 'export HISTTIMEFORMAT="%d/%m/%y %T "' >> ~/.bash_profile
@@ -196,8 +216,7 @@ cp .tmux.conf $HOME/.tmux.conf
 sudo cp vpn*.sh /opt/
 sudo chmod +x /opt/vpn*.sh
 
-sudo cp htb-bg*.jpg /usr/share/backgrounds/
-sudo cp hackingnight.png /usr/share/backgrounds/
+sudo cp desktop-bg/* /usr/share/backgrounds/
 sudo cp -R Material-Black-Lime-Numix-FLAT/ /usr/share/icons/
 sudo cp -R htb/ /usr/share/icons/
 
