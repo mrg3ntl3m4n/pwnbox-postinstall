@@ -15,68 +15,14 @@ echo -e "\nUpdating the system ..."
 sudo parrot-upgrade
 
 echo -e "\nInstalling APT packages ..."
-apt_packages=(
-    apt-transport-https
-    awscli
-    ca-certificates
-    dotnet-sdk-3.1
-    exploitdb
-    feroxbuster
-    ffuf
-    flameshot
-    fonts-ubuntu
-    gnupg
-    jq
-    libssl-dev
-    libxml2-dev
-    libxslt1-dev
-    ltrace
-    ncat
-    neo4j
-    nfs-common
-    open-vm-tools-desktop
-    plank
-    powershell-empire
-    python-dev
-    python2.7
-    python3-venv
-    rdesktop
-    snmp
-    snmp-mibs-downloader
-    strace
-)
-
-sudo apt-get install -y ${apt_packages[@]}
+xargs -d '\n' -- sudo apt-get install -y < packages.txt
 
 # Tools that can be "installed" only cloning repositories
 echo -e "\nCloning GitHub repositories ..."
-git_repos=(
-    https://github.com/dirkjanm/adidnsdump.git
-    https://github.com/adrecon/ADRecon.git
-    https://github.com/stealthcopter/deepce.git
-    https://github.com/andresriancho/enumerate-iam.git
-    https://github.com/unode/firefox_decrypt.git
-    https://github.com/internetwache/GitTools.git
-    https://github.com/micahvandeusen/gMSADumper.git
-    https://github.com/tarunkant/Gopherus.git
-    https://github.com/ticarpi/jwt_tool.git
-    https://github.com/dirkjanm/krbrelayx.git
-    https://github.com/jondonas/linux-exploit-suggester-2.git
-    https://github.com/diego-treitos/linux-smart-enumeration.git
-    https://github.com/samratashok/nishang.git
-    https://github.com/carlospolop/PEASS-ng.git
-    https://github.com/PowerShellMafia/PowerSploit.git
-    https://github.com/the-useless-one/pywerview.git
-    https://github.com/danielmiessler/SecLists.git
-    https://github.com/byt3bl33d3r/SprayingToolkit.git
-    #https://github.com/swisskyrepo/SSRFmap.git
-    https://github.com/tennc/webshell.git
-    https://github.com/bitsadmin/wesng.git
-)
-
 cd /opt
 
-for repo in ${git_repos[@]}; do
+#for repo in ${git_repos[@]}; do
+for repo in $(cat $setup_folder/repositories.txt); do
     sudo git clone $repo
     echo ""
 done
@@ -88,24 +34,26 @@ cd ..
 
 echo -e "\nInstalling BloodHound ..."
 sudo mkdir BloodHound && cd BloodHound/
-sudo wget -q --show-progress https://github.com/BloodHoundAD/BloodHound/releases/download/4.0.3/BloodHound-linux-x64.zip
+sudo wget -q --show-progress https://github.com/BloodHoundAD/BloodHound/releases/download/4.1.0/BloodHound-linux-x64.zip
 echo -e "\nUnzipping BloodHound ..."
 sudo unzip -q BloodHound-linux-x64.zip
 sudo rm BloodHound-linux-x64.zip
 cd ..
 
+echo -e "\nInstalling builder ..."
+pip3 install builder
+
 echo -e "\nInstalling chisel ..."
 sudo mkdir chisel && cd chisel/
-sudo wget -q --show-progress https://github.com/jpillora/chisel/releases/download/v1.7.6/chisel_1.7.6_linux_amd64.gz
-sudo wget -q --show-progress https://github.com/jpillora/chisel/releases/download/v1.7.6/chisel_1.7.6_windows_amd64.gz
+sudo wget -q --show-progress https://github.com/jpillora/chisel/releases/download/v1.7.7/chisel_1.7.7_linux_amd64.gz
+sudo wget -q --show-progress https://github.com/jpillora/chisel/releases/download/v1.7.7/chisel_1.7.7_windows_amd64.gz
 sudo gunzip chisel_*.gz
 cd ..
 
 echo -e "\nInstalling Covenant ..."
 sudo git clone --recurse-submodules https://github.com/cobbr/Covenant
 cd Covenant/Covenant/
-echo "\n==========> After you see \"Creating cert...\", wait a few seconds and then press Ctrl+C to continue the installation <==========\n"
-sudo dotnet run
+sudo dotnet build
 cd ../../
 
 echo -e "\nInstalling CrackMapExec ..."
@@ -135,14 +83,14 @@ pip3 install flask-unsign
 
 echo -e "\nInstalling Ghidra ..."
 sudo mkdir Ghidra && cd Ghidra/
-sudo wget -q --show-progress https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_10.0.4_build/ghidra_10.0.4_PUBLIC_20210928.zip
+sudo wget -q --show-progress https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_10.1.2_build/ghidra_10.1.2_PUBLIC_20220125.zip
 echo -e "\nUnzipping Ghidra ..."
 sudo unzip -q ghidra_*_PUBLIC_*.zip
 sudo rm ghidra_*_PUBLIC_*.zip
 cd ..
 
 echo -e "\nInstalling pip2 for Gopherus ..."
-curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output ~/Downloads/get-pip.py
+wget -q --show-progress -O ~/Downloads/get-pip.py https://bootstrap.pypa.io/pip/2.7/get-pip.py
 sudo python2 ~/Downloads/get-pip.py
 echo -e "\nInstalling Gopherus ..."
 cd Gopherus/
@@ -163,9 +111,12 @@ sudo mkdir kerbrute && cd kerbrute/
 sudo wget -q --show-progress https://github.com/ropnop/kerbrute/releases/download/v1.0.3/kerbrute_linux_amd64
 cd ..
 
+echo -e "\nInstalling nodemon ..."
+sudo npm install -g nodemon
+
 echo -e "\nInstalling Obsidian ..."
 sudo mkdir Obsidian && cd Obsidian/
-sudo wget -q --show-progress https://github.com/obsidianmd/obsidian-releases/releases/download/v0.12.19/Obsidian-0.12.19.AppImage
+sudo wget -q --show-progress https://github.com/obsidianmd/obsidian-releases/releases/download/v0.13.23/Obsidian-0.13.23.AppImage
 sudo chmod +x Obsidian-*.AppImage
 ln -s /opt/Obsidian/Obsidian-*.AppImage $HOME/.local/bin/obsidian
 cd ..
@@ -174,8 +125,9 @@ echo -e "\nInstalling pacu ..."
 pip3 install -U pacu
 
 echo -e "\nInstalling Postman ..."
-sudo wget -q --show-progress https://dl.pstmn.io/download/latest/linux64 -O Postman-linux-x86_64.tar.gz
-sudo tar zxvf Postman-linux-x86_64.tar.gz
+sudo wget -q --show-progress -O Postman-linux-x86_64.tar.gz https://dl.pstmn.io/download/latest/linux64
+sudo tar zxf Postman-linux-x86_64.tar.gz
+sudo rm Postman-linux-x86_64.tar.gz
 cp $setup_folder/Postman.desktop ~/.local/share/applications/Postman.desktop
 
 echo -e "\nInstalling Search-That-Hash ..."
@@ -185,12 +137,6 @@ echo -e "\nInstalling SprayingToolkit ..."
 cd SprayingToolkit/
 sudo -H pip3 install -r requirements.txt
 cd ..
-
-# Conflicting with other tools
-#echo -e "\nInstalling SSRFmap ..."
-#cd SSRFmap/
-#pip3 install -r requirements.txt
-#cd ..
 
 echo -e "\nInstalling subfinder ..."
 go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
@@ -202,10 +148,6 @@ echo -e "\nInstalling ysoserial ..."
 sudo mkdir ysoserial && cd ysoserial/
 sudo wget -q --show-progress https://jitpack.io/com/github/frohoff/ysoserial/master-SNAPSHOT/ysoserial-master-SNAPSHOT.jar
 cd ..
-
-echo -e "\nAdding date and time to bash history ..."
-echo 'export HISTTIMEFORMAT="%d/%m/%y %T "' >> ~/.bash_profile
-source ~/.bash_profile
 
 echo -e "\nCopying files around ..."
 cd $setup_folder/
@@ -223,6 +165,25 @@ sudo cp -R htb/ /usr/share/icons/
 
 sudo mkdir /usr/share/themes/HackTheBox
 sudo cp index.theme /usr/share/themes/HackTheBox/
+
+# Theme settings
+dconf write /org/mate/desktop/interface/gtk-theme "'ARK-Dark'"
+dconf write /org/mate/marco/general/theme "'ARK-Dark'"
+dconf write /org/mate/desktop/interface/icon-theme "'Material-Black-Lime-Numix-FLAT'"
+dconf write /org/mate/desktop/interface/gtk-color-scheme "'base_color:#404552,fg_color:#D3DAE3,tooltip_fg_color:#FFFFFF,selected_bg_color:#5294E2,selected_fg_color:#FFFFFF,text_color:#D3DAE3,bg_color:#383C4A,insensitive_bg_color:#3e4350,insensitive_fg_color:#7c818c,notebook_bg:#404552,dark_sidebar_bg:#353945,tooltip_bg_color:#353945,link_color:#5294E2,menu_bg:#383C4A'"
+dconf write /org/mate/desktop/peripherals/mouse/cursor-theme "'Breeze'"
+dconf write /org/mate/desktop/peripherals/mouse/cursor-size "24"
+dconf write /org/mate/desktop/background/picture-filename "'/usr/share/backgrounds/hackingnight.png'"
+
+# Font settings
+dconf write /org/mate/desktop/interface/font-name "'Lato 11'"
+dconf write /org/mate/desktop/interface/document-font-name "'Lato 11'"
+dconf write /org/mate/caja/desktop/font "'Lato 11'"
+dconf write /org/mate/desktop/interface/monospace-font-name "'Ubuntu Mono 12'"
+
+echo -e "\nAdding date and time to bash history ...\n"
+echo 'export HISTTIMEFORMAT="%d/%m/%y %T "' >> ~/.bash_profile
+source ~/.bash_profile
 
 cat todo.txt
 
